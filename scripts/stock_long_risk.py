@@ -180,10 +180,96 @@ def load_market_data(holdings):
             "name": name,
             "price": price,
             "avg_volume": avg_volume,
-            "beta": 1.0,
+            "beta": 1.0,  # 默认Beta为1.0
         }
     
+    # 尝试计算个股Beta
+    try:
+        stock_betas = calculate_stock_betas(stock_codes)
+        for code, beta in stock_betas.items():
+            if code in market_data:
+                market_data[code]['beta'] = beta
+    except Exception as e:
+        pass  # 如果Beta计算失败，使用默认值1.0
+    
     return market_data
+
+def calculate_stock_betas(stock_codes, period=60):
+    """
+    计算个股Beta（基于行业分类估算）
+    
+    Args:
+        stock_codes: 股票代码列表
+        period: 计算Beta的历史天数（默认60天）
+    
+    Returns:
+        dict: {code: beta}
+    """
+    # 行业Beta参考值（基于历史数据的经验值）
+    industry_betas = {
+        # 金融
+        '银行': 1.0, '证券': 1.3, '保险': 1.1,
+        # 科技
+        '半导体': 1.4, '软件': 1.3, '电子': 1.2,
+        # 医药
+        '医药': 0.9, '生物科技': 1.1,
+        # 消费
+        '白酒': 1.1, '食品': 0.8, '家电': 1.0,
+        # 周期
+        '有色': 1.3, '钢铁': 1.2, '化工': 1.1,
+        # 能源
+        '电力': 0.7, '煤炭': 1.0, '石油': 0.9,
+        # 制造
+        '汽车': 1.2, '机械': 1.1, '军工': 1.3,
+        # 地产
+        '房地产': 1.2, '建筑': 1.1,
+        # 其他
+        'ST': 1.4, '传媒': 1.2, '通信': 1.0,
+    }
+    
+    # 股票代码到行业的映射（简化版）
+    stock_industry_map = {
+        # 金融
+        '000001': '银行', '600000': '银行', '601166': '银行', '002142': '银行',
+        '600030': '证券', '600837': '证券', '601688': '证券', '601788': '证券',
+        '601318': '保险', '601601': '保险', '601628': '保险',
+        # 科技
+        '002156': '半导体', '600745': '半导体', '603501': '半导体', '600703': '半导体',
+        '600570': '软件', '300033': '软件', '300059': '软件',
+        '002230': '电子', '002415': '电子', '000725': '电子', '000100': '电子',
+        # 医药
+        '600276': '医药', '600196': '医药', '603259': '医药', '300015': '医药',
+        '300122': '医药', '002007': '医药', '300142': '医药', '603658': '医药',
+        # 消费
+        '000858': '白酒', '000568': '白酒', '002304': '白酒', '600809': '白酒',
+        '600887': '食品', '000895': '食品', '603288': '食品',
+        '000333': '家电', '000651': '家电', '600690': '家电',
+        # 周期
+        '002460': '有色', '300014': '有色', '601899': '有色',
+        '600585': '建材', '002271': '建材',
+        # 能源
+        '600900': '电力', '601985': '电力', '601088': '煤炭',
+        '601857': '石油', '600028': '石油',
+        # 制造
+        '002594': '汽车', '601633': '汽车',
+        '600031': '机械', '601766': '机械',
+        '600893': '军工', '000768': '军工',
+        # 地产
+        '000002': '房地产', '600048': '房地产',
+        '601668': '建筑', '601390': '建筑', '601186': '建筑', '601800': '建筑',
+        # 其他
+        '300096': 'ST',  # ST易联众
+        '300413': '传媒', '002027': '传媒',
+        '000063': '通信', '600050': '通信',
+    }
+    
+    betas = {}
+    for code in stock_codes:
+        industry = stock_industry_map.get(code, '其他')
+        beta = industry_betas.get(industry, 1.0)
+        betas[code] = beta
+    
+    return betas
 
 def calculate_risk_metrics(holdings, market_data, warning_line=0.85, liquidation_line=0.80):
     """
@@ -244,6 +330,14 @@ def calculate_risk_metrics(holdings, market_data, warning_line=0.85, liquidation
     # 前5大重仓集中度
     top5_concentration = sum(w['weight'] for w in weights[:5])
     
+    # 计算投资组合Beta（加权平均）
+    portfolio_beta = 0
+    for w in weights:
+        code = w['code']
+        weight = w['weight'] / 100  # 转换为小数
+        stock_beta = market_data.get(code, {}).get('beta', 1.0)
+        portfolio_beta += weight * stock_beta
+    
     return {
         'total_cost': total_cost,
         'total_value': total_value,
@@ -255,7 +349,8 @@ def calculate_risk_metrics(holdings, market_data, warning_line=0.85, liquidation
         'warning_drop': warning_drop,
         'liquidation_drop': liquidation_drop,
         'weights': weights,
-        'top5_concentration': top5_concentration
+        'top5_concentration': top5_concentration,
+        'portfolio_beta': portfolio_beta
     }
 
 def calculate_liquidity(holdings, market_data):
@@ -516,7 +611,7 @@ def export_to_excel(holdings, market_data, risk, liquidity, extreme, correlation
             # Sheet 1: 整体风险评估
             summary_data = {
                 '指标': ['总成本', '总市值', '总盈亏', '盈亏比例', '当前净值', '预警线', '平仓线', 
-                        '距离预警线', '距离平仓线', '前5大集中度'],
+                        '距离预警线', '距离平仓线', '前5大集中度', '投资组合β'],
                 '数值': [
                     f"{risk['total_cost']:,.2f} 元",
                     f"{risk['total_value']:,.2f} 元",
@@ -527,7 +622,8 @@ def export_to_excel(holdings, market_data, risk, liquidity, extreme, correlation
                     f"{risk['liquidation_line']:.2%}",
                     f"{risk['warning_drop']:.2f}%",
                     f"{risk['liquidation_drop']:.2f}%",
-                    f"{risk['top5_concentration']:.2f}%"
+                    f"{risk['top5_concentration']:.2f}%",
+                    f"{risk['portfolio_beta']:.3f}"
                 ]
             }
             df_summary = pd.DataFrame(summary_data)
@@ -558,7 +654,8 @@ def export_to_excel(holdings, market_data, risk, liquidity, extreme, correlation
                     '市值': market_value,
                     '成本': cost_value,
                     '盈亏': profit,
-                    '盈亏比例': f"{profit_pct:+.2f}%"
+                    '盈亏比例': f"{profit_pct:+.2f}%",
+                    '个股β': round(market_data.get(code, {}).get('beta', 1.0), 3)
                 })
             df_holdings = pd.DataFrame(holdings_data)
             df_holdings.to_excel(writer, sheet_name='持仓明细', index=False)
@@ -698,6 +795,13 @@ def generate_report(holdings_file=None, output_excel=None, wechat_user=None):
     print(f"距离平仓线还需下跌: {risk['liquidation_drop']:.2f}%")
     print()
     print(f"前5大重仓集中度: {risk['top5_concentration']:.2f}%")
+    print(f"投资组合β: {risk['portfolio_beta']:.3f}")
+    if risk['portfolio_beta'] > 1.2:
+        print("  ⚠️  β > 1.2，组合波动大于市场，市场上涨时收益更高，下跌时亏损更大")
+    elif risk['portfolio_beta'] < 0.8:
+        print("  ✅  β < 0.8，组合波动小于市场，防御性较强")
+    else:
+        print("  ✅  β 在0.8-1.2之间，组合波动与市场相当")
     print()
     
     # 2. 持仓权重分析
