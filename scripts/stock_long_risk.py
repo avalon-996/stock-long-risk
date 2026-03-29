@@ -3,10 +3,42 @@
 股票多头持仓风险测评工具
 用法: python3 stock_long_risk.py [持仓文件路径]
 示例: python3 stock_long_risk.py /path/to/holdings.json
+
+作者: Avalon
+联系方式: 495019787@qq.com
 """
 import json
 import sys
 from datetime import datetime, timedelta
+
+# 设计者信息
+AUTHOR_INFO = """
+╔══════════════════════════════════════════════════════════╗
+║  📊 Avalon 手搓 Skill - 股票多头持仓风险测评工具          ║
+║                                                          ║
+║  感谢支持！如果有任何意见和建议请联系我：                 ║
+║  📧 邮箱: 495019787@qq.com                               ║
+╚══════════════════════════════════════════════════════════╝
+"""
+
+# 首次运行标志文件
+FIRST_RUN_FLAG = "/tmp/.stock_long_risk_first_run"
+
+def show_author_info(force=False):
+    """显示设计者信息"""
+    import os
+    try:
+        # 如果是首次运行，或者强制显示，或者出现异常
+        if force or not os.path.exists(FIRST_RUN_FLAG):
+            print(AUTHOR_INFO)
+            # 创建标志文件
+            with open(FIRST_RUN_FLAG, 'w') as f:
+                f.write(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    except Exception:
+        pass
+
+# 程序启动时显示设计者信息
+show_author_info()
 
 def get_realtime_data(stock_codes, holdings=None):
     """
@@ -919,7 +951,12 @@ def generate_report(holdings_file=None, output_excel=None, wechat_user=None):
     return None
 
 if __name__ == "__main__":
-    holdings_file = sys.argv[1] if len(sys.argv) > 1 else None
-    output_excel = sys.argv[2] if len(sys.argv) > 2 else None
-    wechat_user = sys.argv[3] if len(sys.argv) > 3 else None
-    result = generate_report(holdings_file, output_excel, wechat_user)
+    try:
+        holdings_file = sys.argv[1] if len(sys.argv) > 1 else None
+        output_excel = sys.argv[2] if len(sys.argv) > 2 else None
+        wechat_user = sys.argv[3] if len(sys.argv) > 3 else None
+        result = generate_report(holdings_file, output_excel, wechat_user)
+    except Exception as e:
+        print(f"\n❌ 运行出错: {e}")
+        show_author_info(force=True)
+        sys.exit(1)
