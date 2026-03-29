@@ -1,0 +1,12 @@
+[
+  {"code": "600958", "name": "东方证券", "shares": 10240, "cost_price": 16.027, "current_price": 16.027},
+  {"code": "002156", "name": "通富微电", "shares": 1500, "cost_price": 36.55, "current_price": 36.55},
+  {"code": "300096", "name": "ST易联众", "shares": 6000, "cost_price": 33.18, "current_price": 33.18},
+  {"code": "002195", "name": "岩山科技", "shares": 4000, "cost_price": 9.88, "current_price": 9.88},
+  {"code": "600570", "name": "恒生电子", "shares": 1000, "cost_price": 42.22, "current_price": 42.22},
+  {"code": "600170", "name": "上海建工", "shares": 9000, "cost_price": 3.251, "current_price": 3.251},
+  {"code": "601138", "name": "工业富联", "shares": 400, "cost_price": 60.121, "current_price": 60.121},
+  {"code": "002291", "name": "遥望科技", "shares": 10000, "cost_price": 7.142, "current_price": 7.142},
+  {"code": "300456", "name": "赛微电子", "shares": 600, "cost_price": 59.057, "current_price": 59.057},
+  {"code": "300818", "name": "北投科技", "shares": 1600, "cost_price": 17.010, "current_price": 17.010}
+]

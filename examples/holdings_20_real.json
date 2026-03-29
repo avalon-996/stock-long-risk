@@ -1,0 +1,122 @@
+[
+  {
+    "code": "600958",
+    "name": "东方证券",
+    "shares": 10240,
+    "cost_price": 16.027
+  },
+  {
+    "code": "002156",
+    "name": "通富微电",
+    "shares": 1500,
+    "cost_price": 36.55
+  },
+  {
+    "code": "300096",
+    "name": "ST易联众",
+    "shares": 6000,
+    "cost_price": 33.18
+  },
+  {
+    "code": "002195",
+    "name": "岩山科技",
+    "shares": 4000,
+    "cost_price": 9.88
+  },
+  {
+    "code": "600570",
+    "name": "恒生电子",
+    "shares": 1000,
+    "cost_price": 42.22
+  },
+  {
+    "code": "600170",
+    "name": "上海建工",
+    "shares": 9000,
+    "cost_price": 3.251
+  },
+  {
+    "code": "601138",
+    "name": "工业富联",
+    "shares": 400,
+    "cost_price": 60.121
+  },
+  {
+    "code": "002291",
+    "name": "遥望科技",
+    "shares": 10000,
+    "cost_price": 7.142
+  },
+  {
+    "code": "300456",
+    "name": "赛微电子",
+    "shares": 600,
+    "cost_price": 59.057
+  },
+  {
+    "code": "300818",
+    "name": "北投科技",
+    "shares": 1600,
+    "cost_price": 17.01
+  },
+  {
+    "code": "688110",
+    "name": "东芯股份",
+    "shares": 12300,
+    "cost_price": 126.794
+  },
+  {
+    "code": "601689",
+    "name": "拓普集团",
+    "shares": 14000,
+    "cost_price": 68.108
+  },
+  {
+    "code": "688351",
+    "name": "摩尔线程-U",
+    "shares": 700,
+    "cost_price": 622.577
+  },
+  {
+    "code": "688097",
+    "name": "博众精工",
+    "shares": 5000,
+    "cost_price": 58.817
+  },
+  {
+    "code": "603380",
+    "name": "易德龙",
+    "shares": 7000,
+    "cost_price": 41.073
+  },
+  {
+    "code": "688800",
+    "name": "瑞可达",
+    "shares": 2000,
+    "cost_price": 75.593
+  },
+  {
+    "code": "300339",
+    "name": "润和软件",
+    "shares": 4000,
+    "cost_price": 56.445
+  },
+  {
+    "code": "002202",
+    "name": "金风科技",
+    "shares": 2000,
+    "cost_price": 32.249
+  },
+  {
+    "code": "002371",
+    "name": "北方华创",
+    "shares": 100,
+    "cost_price": 497.399
+  },
+  {
+    "code": "300827",
+    "name": "上能电气",
+    "shares": 1000,
+    "cost_price": 44.106
+  }
+]

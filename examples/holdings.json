@@ -1,0 +1,30 @@
+[
+  {
+    "code": "000001",
+    "name": "平安银行",
+    "shares": 10000,
+    "cost_price": 10.50,
+    "current_price": 11.02
+  },
+  {
+    "code": "000002",
+    "name": "万科A",
+    "shares": 5000,
+    "cost_price": 16.00,
+    "current_price": 15.50
+  },
+  {
+    "code": "600519",
+    "name": "贵州茅台",
+    "shares": 100,
+    "cost_price": 1650.00,
+    "current_price": 1680.00
+  },
+  {
+    "code": "002857",
+    "name": "三晖电气",
+    "shares": 2000,
+    "cost_price": 22.72,
+    "current_price": 23.50
+  }
+]

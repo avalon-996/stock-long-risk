@@ -1,0 +1,12 @@
+[
+  {"code": "688110", "name": "东芯股份", "shares": 12300, "cost_price": 126.794, "current_price": 115.83},
+  {"code": "601689", "name": "拓普集团", "shares": 14000, "cost_price": 68.108, "current_price": 57.79},
+  {"code": "688351", "name": "摩尔线程-U", "shares": 700, "cost_price": 622.577, "current_price": 552.50},
+  {"code": "688097", "name": "博众精工", "shares": 5000, "cost_price": 58.817, "current_price": 55.50},
+  {"code": "603380", "name": "易德龙", "shares": 7000, "cost_price": 41.073, "current_price": 33.54},
+  {"code": "688800", "name": "瑞可达", "shares": 2000, "cost_price": 75.593, "current_price": 87.60},
+  {"code": "300339", "name": "润和软件", "shares": 4000, "cost_price": 56.445, "current_price": 39.50},
+  {"code": "002202", "name": "金风科技", "shares": 2000, "cost_price": 32.249, "current_price": 27.45},
+  {"code": "002371", "name": "北方华创", "shares": 100, "cost_price": 497.399, "current_price": 452.98},
+  {"code": "300827", "name": "上能电气", "shares": 1000, "cost_price": 44.106, "current_price": 43.08}
+]

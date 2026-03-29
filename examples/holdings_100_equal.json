@@ -1,0 +1,779 @@
+[
+  {
+    "code": "000001",
+    "name": "平安银行",
+    "shares": 500,
+    "cost_price": 189.69,
+    "current_price": 172.55
+  },
+  {
+    "code": "000002",
+    "name": "万科A",
+    "shares": 1700,
+    "cost_price": 55.3,
+    "current_price": 52.92
+  },
+  {
+    "code": "000063",
+    "name": "中兴通讯",
+    "shares": 800,
+    "cost_price": 107.92,
+    "current_price": 104.08
+  },
+  {
+    "code": "000100",
+    "name": "TCL科技",
+    "shares": 600,
+    "cost_price": 153.29,
+    "current_price": 148.96
+  },
+  {
+    "code": "000333",
+    "name": "美的集团",
+    "shares": 400,
+    "cost_price": 188.03,
+    "current_price": 187.71
+  },
+  {
+    "code": "000538",
+    "name": "云南白药",
+    "shares": 2700,
+    "cost_price": 34.13,
+    "current_price": 32.22
+  },
+  {
+    "code": "000568",
+    "name": "泸州老窖",
+    "shares": 5500,
+    "cost_price": 16.45,
+    "current_price": 16.14
+  },
+  {
+    "code": "000651",
+    "name": "格力电器",
+    "shares": 600,
+    "cost_price": 135.85,
+    "current_price": 129.58
+  },
+  {
+    "code": "000725",
+    "name": "京东方A",
+    "shares": 500,
+    "cost_price": 165.17,
+    "current_price": 160.45
+  },
+  {
+    "code": "000768",
+    "name": "中航西飞",
+    "shares": 400,
+    "cost_price": 211.57,
+    "current_price": 199.59
+  },
+  {
+    "code": "000858",
+    "name": "五粮液",
+    "shares": 1100,
+    "cost_price": 79.39,
+    "current_price": 75.13
+  },
+  {
+    "code": "000895",
+    "name": "双汇发展",
+    "shares": 500,
+    "cost_price": 162.27,
+    "current_price": 174.33
+  },
+  {
+    "code": "002001",
+    "name": "新和成",
+    "shares": 4700,
+    "cost_price": 19.26,
+    "current_price": 19.0
+  },
+  {
+    "code": "002007",
+    "name": "华兰生物",
+    "shares": 1400,
+    "cost_price": 58.43,
+    "current_price": 61.18
+  },
+  {
+    "code": "002024",
+    "name": "苏宁易购",
+    "shares": 500,
+    "cost_price": 156.46,
+    "current_price": 155.09
+  },
+  {
+    "code": "002027",
+    "name": "分众传媒",
+    "shares": 1100,
+    "cost_price": 75.91,
+    "current_price": 76.26
+  },
+  {
+    "code": "002049",
+    "name": "紫光国微",
+    "shares": 500,
+    "cost_price": 150.52,
+    "current_price": 162.06
+  },
+  {
+    "code": "002120",
+    "name": "韵达股份",
+    "shares": 900,
+    "cost_price": 91.04,
+    "current_price": 93.71
+  },
+  {
+    "code": "002142",
+    "name": "宁波银行",
+    "shares": 700,
+    "cost_price": 127.25,
+    "current_price": 122.78
+  },
+  {
+    "code": "002230",
+    "name": "科大讯飞",
+    "shares": 700,
+    "cost_price": 108.85,
+    "current_price": 113.04
+  },
+  {
+    "code": "002271",
+    "name": "东方雨虹",
+    "shares": 800,
+    "cost_price": 105.55,
+    "current_price": 100.65
+  },
+  {
+    "code": "002304",
+    "name": "洋河股份",
+    "shares": 900,
+    "cost_price": 84.7,
+    "current_price": 90.55
+  },
+  {
+    "code": "002352",
+    "name": "顺丰控股",
+    "shares": 900,
+    "cost_price": 90.13,
+    "current_price": 91.17
+  },
+  {
+    "code": "002415",
+    "name": "海康威视",
+    "shares": 500,
+    "cost_price": 157.5,
+    "current_price": 167.56
+  },
+  {
+    "code": "002460",
+    "name": "赣锋锂业",
+    "shares": 500,
+    "cost_price": 167.15,
+    "current_price": 177.58
+  },
+  {
+    "code": "002475",
+    "name": "立讯精密",
+    "shares": 500,
+    "cost_price": 168.34,
+    "current_price": 170.1
+  },
+  {
+    "code": "002594",
+    "name": "比亚迪",
+    "shares": 400,
+    "cost_price": 184.59,
+    "current_price": 199.2
+  },
+  {
+    "code": "002714",
+    "name": "牧原股份",
+    "shares": 1600,
+    "cost_price": 52.92,
+    "current_price": 56.25
+  },
+  {
+    "code": "002812",
+    "name": "恩捷股份",
+    "shares": 500,
+    "cost_price": 189.11,
+    "current_price": 176.6
+  },
+  {
+    "code": "300014",
+    "name": "亿纬锂能",
+    "shares": 1900,
+    "cost_price": 44.38,
+    "current_price": 46.36
+  },
+  {
+    "code": "300015",
+    "name": "爱尔眼科",
+    "shares": 1300,
+    "cost_price": 66.61,
+    "current_price": 65.54
+  },
+  {
+    "code": "300033",
+    "name": "同花顺",
+    "shares": 1000,
+    "cost_price": 75.72,
+    "current_price": 82.84
+  },
+  {
+    "code": "300059",
+    "name": "东方财富",
+    "shares": 400,
+    "cost_price": 170.59,
+    "current_price": 185.89
+  },
+  {
+    "code": "300122",
+    "name": "智飞生物",
+    "shares": 500,
+    "cost_price": 155.79,
+    "current_price": 151.92
+  },
+  {
+    "code": "300124",
+    "name": "汇川技术",
+    "shares": 600,
+    "cost_price": 134.77,
+    "current_price": 132.85
+  },
+  {
+    "code": "300142",
+    "name": "沃森生物",
+    "shares": 600,
+    "cost_price": 145.5,
+    "current_price": 144.78
+  },
+  {
+    "code": "300274",
+    "name": "阳光电源",
+    "shares": 1100,
+    "cost_price": 80.08,
+    "current_price": 75.48
+  },
+  {
+    "code": "300408",
+    "name": "三环集团",
+    "shares": 600,
+    "cost_price": 156.2,
+    "current_price": 146.97
+  },
+  {
+    "code": "300413",
+    "name": "芒果超媒",
+    "shares": 500,
+    "cost_price": 149.72,
+    "current_price": 154.47
+  },
+  {
+    "code": "300433",
+    "name": "蓝思科技",
+    "shares": 1000,
+    "cost_price": 90.88,
+    "current_price": 84.26
+  },
+  {
+    "code": "300498",
+    "name": "温氏股份",
+    "shares": 500,
+    "cost_price": 149.55,
+    "current_price": 160.46
+  },
+  {
+    "code": "300750",
+    "name": "宁德时代",
+    "shares": 600,
+    "cost_price": 126.17,
+    "current_price": 138.0
+  },
+  {
+    "code": "300760",
+    "name": "迈瑞医疗",
+    "shares": 1800,
+    "cost_price": 45.82,
+    "current_price": 49.88
+  },
+  {
+    "code": "300919",
+    "name": "中伟股份",
+    "shares": 700,
+    "cost_price": 123.79,
+    "current_price": 119.09
+  },
+  {
+    "code": "600000",
+    "name": "浦发银行",
+    "shares": 2200,
+    "cost_price": 40.53,
+    "current_price": 39.8
+  },
+  {
+    "code": "600009",
+    "name": "上海机场",
+    "shares": 500,
+    "cost_price": 169.18,
+    "current_price": 155.26
+  },
+  {
+    "code": "600016",
+    "name": "民生银行",
+    "shares": 500,
+    "cost_price": 164.62,
+    "current_price": 173.15
+  },
+  {
+    "code": "600028",
+    "name": "中国石化",
+    "shares": 1000,
+    "cost_price": 87.85,
+    "current_price": 81.92
+  },
+  {
+    "code": "600030",
+    "name": "中信证券",
+    "shares": 500,
+    "cost_price": 152.73,
+    "current_price": 153.26
+  },
+  {
+    "code": "600031",
+    "name": "三一重工",
+    "shares": 600,
+    "cost_price": 130.2,
+    "current_price": 135.35
+  },
+  {
+    "code": "600036",
+    "name": "招商银行",
+    "shares": 400,
+    "cost_price": 174.28,
+    "current_price": 185.71
+  },
+  {
+    "code": "600048",
+    "name": "保利发展",
+    "shares": 1900,
+    "cost_price": 51.3,
+    "current_price": 46.83
+  },
+  {
+    "code": "600050",
+    "name": "中国联通",
+    "shares": 800,
+    "cost_price": 97.63,
+    "current_price": 105.98
+  },
+  {
+    "code": "600104",
+    "name": "上汽集团",
+    "shares": 1100,
+    "cost_price": 85.5,
+    "current_price": 81.32
+  },
+  {
+    "code": "600196",
+    "name": "复星医药",
+    "shares": 800,
+    "cost_price": 112.57,
+    "current_price": 108.21
+  },
+  {
+    "code": "600276",
+    "name": "恒瑞医药",
+    "shares": 2700,
+    "cost_price": 31.47,
+    "current_price": 32.85
+  },
+  {
+    "code": "600309",
+    "name": "万华化学",
+    "shares": 1100,
+    "cost_price": 72.25,
+    "current_price": 79.66
+  },
+  {
+    "code": "600346",
+    "name": "恒力石化",
+    "shares": 700,
+    "cost_price": 112.18,
+    "current_price": 119.8
+  },
+  {
+    "code": "600406",
+    "name": "国电南瑞",
+    "shares": 500,
+    "cost_price": 185.15,
+    "current_price": 178.05
+  },
+  {
+    "code": "600436",
+    "name": "片仔癀",
+    "shares": 900,
+    "cost_price": 88.94,
+    "current_price": 96.1
+  },
+  {
+    "code": "600438",
+    "name": "通威股份",
+    "shares": 700,
+    "cost_price": 114.12,
+    "current_price": 126.65
+  },
+  {
+    "code": "600519",
+    "name": "贵州茅台",
+    "shares": 7100,
+    "cost_price": 12.22,
+    "current_price": 12.52
+  },
+  {
+    "code": "600585",
+    "name": "海螺水泥",
+    "shares": 6300,
+    "cost_price": 15.12,
+    "current_price": 14.23
+  },
+  {
+    "code": "600588",
+    "name": "用友网络",
+    "shares": 400,
+    "cost_price": 185.16,
+    "current_price": 186.94
+  },
+  {
+    "code": "600600",
+    "name": "青岛啤酒",
+    "shares": 500,
+    "cost_price": 157.14,
+    "current_price": 169.07
+  },
+  {
+    "code": "600690",
+    "name": "海尔智家",
+    "shares": 500,
+    "cost_price": 174.29,
+    "current_price": 166.63
+  },
+  {
+    "code": "600703",
+    "name": "三安光电",
+    "shares": 500,
+    "cost_price": 168.61,
+    "current_price": 165.29
+  },
+  {
+    "code": "600745",
+    "name": "闻泰科技",
+    "shares": 900,
+    "cost_price": 99.99,
+    "current_price": 99.86
+  },
+  {
+    "code": "600809",
+    "name": "山西汾酒",
+    "shares": 2900,
+    "cost_price": 33.33,
+    "current_price": 30.85
+  },
+  {
+    "code": "600837",
+    "name": "海通证券",
+    "shares": 800,
+    "cost_price": 111.74,
+    "current_price": 109.45
+  },
+  {
+    "code": "600887",
+    "name": "伊利股份",
+    "shares": 1000,
+    "cost_price": 92.48,
+    "current_price": 85.67
+  },
+  {
+    "code": "600893",
+    "name": "航发动力",
+    "shares": 400,
+    "cost_price": 183.85,
+    "current_price": 185.01
+  },
+  {
+    "code": "600900",
+    "name": "长江电力",
+    "shares": 400,
+    "cost_price": 186.01,
+    "current_price": 190.54
+  },
+  {
+    "code": "601012",
+    "name": "隆基绿能",
+    "shares": 700,
+    "cost_price": 117.5,
+    "current_price": 117.52
+  },
+  {
+    "code": "601088",
+    "name": "中国神华",
+    "shares": 500,
+    "cost_price": 152.68,
+    "current_price": 165.44
+  },
+  {
+    "code": "601111",
+    "name": "中国国航",
+    "shares": 500,
+    "cost_price": 154.06,
+    "current_price": 152.9
+  },
+  {
+    "code": "601166",
+    "name": "兴业银行",
+    "shares": 1600,
+    "cost_price": 58.15,
+    "current_price": 55.87
+  },
+  {
+    "code": "601186",
+    "name": "中国铁建",
+    "shares": 400,
+    "cost_price": 184.32,
+    "current_price": 191.36
+  },
+  {
+    "code": "601318",
+    "name": "中国平安",
+    "shares": 700,
+    "cost_price": 121.74,
+    "current_price": 117.22
+  },
+  {
+    "code": "601390",
+    "name": "中国中铁",
+    "shares": 1200,
+    "cost_price": 68.55,
+    "current_price": 73.22
+  },
+  {
+    "code": "601398",
+    "name": "工商银行",
+    "shares": 1100,
+    "cost_price": 81.83,
+    "current_price": 75.7
+  },
+  {
+    "code": "601601",
+    "name": "中国太保",
+    "shares": 1100,
+    "cost_price": 74.55,
+    "current_price": 77.92
+  },
+  {
+    "code": "601628",
+    "name": "中国人寿",
+    "shares": 900,
+    "cost_price": 104.05,
+    "current_price": 99.41
+  },
+  {
+    "code": "601633",
+    "name": "长城汽车",
+    "shares": 500,
+    "cost_price": 140.4,
+    "current_price": 150.42
+  },
+  {
+    "code": "601668",
+    "name": "中国建筑",
+    "shares": 2000,
+    "cost_price": 42.94,
+    "current_price": 43.59
+  },
+  {
+    "code": "601688",
+    "name": "华泰证券",
+    "shares": 400,
+    "cost_price": 196.52,
+    "current_price": 192.01
+  },
+  {
+    "code": "601766",
+    "name": "中国中车",
+    "shares": 500,
+    "cost_price": 184.69,
+    "current_price": 169.49
+  },
+  {
+    "code": "601788",
+    "name": "光大证券",
+    "shares": 600,
+    "cost_price": 141.46,
+    "current_price": 140.94
+  },
+  {
+    "code": "601800",
+    "name": "中国交建",
+    "shares": 600,
+    "cost_price": 143.0,
+    "current_price": 136.58
+  },
+  {
+    "code": "601818",
+    "name": "光大银行",
+    "shares": 3300,
+    "cost_price": 26.72,
+    "current_price": 26.73
+  },
+  {
+    "code": "601857",
+    "name": "中国石油",
+    "shares": 600,
+    "cost_price": 135.5,
+    "current_price": 145.86
+  },
+  {
+    "code": "601888",
+    "name": "中国中免",
+    "shares": 1100,
+    "cost_price": 77.86,
+    "current_price": 80.21
+  },
+  {
+    "code": "601899",
+    "name": "紫金矿业",
+    "shares": 400,
+    "cost_price": 213.71,
+    "current_price": 199.9
+  },
+  {
+    "code": "601933",
+    "name": "永辉超市",
+    "shares": 3200,
+    "cost_price": 29.99,
+    "current_price": 27.85
+  },
+  {
+    "code": "601985",
+    "name": "中国核电",
+    "shares": 500,
+    "cost_price": 161.22,
+    "current_price": 172.54
+  },
+  {
+    "code": "601988",
+    "name": "中国银行",
+    "shares": 1600,
+    "cost_price": 58.92,
+    "current_price": 53.67
+  },
+  {
+    "code": "601989",
+    "name": "中国重工",
+    "shares": 600,
+    "cost_price": 135.99,
+    "current_price": 138.4
+  },
+  {
+    "code": "603259",
+    "name": "药明康德",
+    "shares": 400,
+    "cost_price": 195.18,
+    "current_price": 195.1
+  },
+  {
+    "code": "603288",
+    "name": "海天味业",
+    "shares": 800,
+    "cost_price": 116.5,
+    "current_price": 108.01
+  },
+  {
+    "code": "603501",
+    "name": "韦尔股份",
+    "shares": 1300,
+    "cost_price": 61.97,
+    "current_price": 67.03
+  },
+  {
+    "code": "603658",
+    "name": "安图生物",
+    "shares": 700,
+    "cost_price": 110.2,
+    "current_price": 120.04
+  },
+  {
+    "code": "603986",
+    "name": "兆易创新",
+    "shares": 1200,
+    "cost_price": 75.24,
+    "current_price": 69.77
+  },
+  {
+    "code": "603993",
+    "name": "洛阳钼业",
+    "shares": 2200,
+    "cost_price": 36.32,
+    "current_price": 39.33
+  },
+  {
+    "code": "605117",
+    "name": "德业股份",
+    "shares": 400,
+    "cost_price": 203.66,
+    "current_price": 193.8
+  },
+  {
+    "code": "688001",
+    "name": "华兴源创",
+    "shares": 900,
+    "cost_price": 96.76,
+    "current_price": 91.75
+  },
+  {
+    "code": "688008",
+    "name": "澜起科技",
+    "shares": 400,
+    "cost_price": 191.15,
+    "current_price": 185.83
+  },
+  {
+    "code": "688012",
+    "name": "中微公司",
+    "shares": 500,
+    "cost_price": 153.07,
+    "current_price": 168.29
+  },
+  {
+    "code": "688036",
+    "name": "传音控股",
+    "shares": 600,
+    "cost_price": 150.08,
+    "current_price": 141.53
+  },
+  {
+    "code": "688111",
+    "name": "金山办公",
+    "shares": 500,
+    "cost_price": 168.01,
+    "current_price": 173.17
+  },
+  {
+    "code": "688599",
+    "name": "天合光能",
+    "shares": 500,
+    "cost_price": 166.29,
+    "current_price": 179.39
+  },
+  {
+    "code": "688981",
+    "name": "中芯国际",
+    "shares": 600,
+    "cost_price": 138.2,
+    "current_price": 132.04
+  }
+]
