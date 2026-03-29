@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 def get_realtime_data(stock_codes, holdings=None):
     """
-    获取实时行情数据
+    获取实时行情数据（分批获取，支持大量股票）
     使用腾讯财经接口获取A股实时行情（快速稳定）
     
     Args:
@@ -24,67 +24,74 @@ def get_realtime_data(stock_codes, holdings=None):
     
     result = {}
     
-    # 构建腾讯财经接口URL
-    # 上海股票前缀: sh, 深圳股票前缀: sz
-    code_list = []
-    for code in stock_codes:
-        if code.startswith('6'):
-            code_list.append(f"sh{code}")
-        else:
-            code_list.append(f"sz{code}")
+    # 分批获取，每批最多50只
+    batch_size = 50
+    total_codes = len(stock_codes)
     
-    url = f"http://qt.gtimg.cn/q={','.join(code_list)}"
-    
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
-        resp = requests.get(url, headers=headers, timeout=10)
-        resp.encoding = 'gb2312'
-        text = resp.text
+    for i in range(0, total_codes, batch_size):
+        batch = stock_codes[i:i+batch_size]
         
-        # 解析数据
-        for line in text.strip().split(';'):
-            line = line.strip()
-            if not line or 'v_' not in line:
-                continue
+        # 构建腾讯财经接口URL
+        code_list = []
+        for code in batch:
+            if code.startswith('6'):
+                code_list.append(f"sh{code}")
+            else:
+                code_list.append(f"sz{code}")
+        
+        url = f"http://qt.gtimg.cn/q={','.join(code_list)}"
+        
+        try:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            }
+            resp = requests.get(url, headers=headers, timeout=10)
+            resp.encoding = 'gb2312'
+            text = resp.text
             
-            try:
-                prefix, data = line.split('="', 1)
-                data = data.rstrip('"')
-                parts = data.split('~')
-                
-                if len(parts) < 45:
+            # 解析数据
+            for line in text.strip().split(';'):
+                line = line.strip()
+                if not line or 'v_' not in line:
                     continue
                 
-                # 提取股票代码（去掉前缀）
-                full_code = prefix.split('_')[-1]
-                code = full_code[2:]  # 去掉 sh/sz 前缀
-                
-                # 获取股票名称
-                name = parts[1]
-                if holdings:
-                    for h in holdings:
-                        if h['code'] == code:
-                            name = h.get('name', parts[1])
-                            break
-                
-                result[code] = {
-                    "name": name,
-                    "price": float(parts[3]),
-                    "avg_volume": int(parts[36]) if parts[36].isdigit() else 100000,  # 日均成交量
-                    "change_pct": float(parts[32]),
-                }
-            except Exception as e:
-                continue
-        
-        if result:
-            return result
-                
-    except Exception as e:
-        print(f"  腾讯接口获取失败: {e}")
+                try:
+                    prefix, data = line.split('="', 1)
+                    data = data.rstrip('"')
+                    parts = data.split('~')
+                    
+                    if len(parts) < 45:
+                        continue
+                    
+                    # 提取股票代码（去掉前缀）
+                    full_code = prefix.split('_')[-1]
+                    code = full_code[2:]  # 去掉 sh/sz 前缀
+                    
+                    # 获取股票名称
+                    name = parts[1]
+                    if holdings:
+                        for h in holdings:
+                            if h['code'] == code:
+                                name = h.get('name', parts[1])
+                                break
+                    
+                    result[code] = {
+                        "name": name,
+                        "price": float(parts[3]),
+                        "avg_volume": int(parts[36]) if parts[36].isdigit() else 100000,
+                        "change_pct": float(parts[32]),
+                    }
+                except Exception as e:
+                    continue
+                    
+        except Exception as e:
+            print(f"  批次 {i//batch_size + 1} 获取失败: {e}")
+            continue
     
-    # 备用：使用 akshare
+    if result:
+        return result
+    
+    # 备用：使用 akshare 逐个获取
     print("  尝试备用数据源...")
     try:
         import akshare as ak
@@ -97,6 +104,30 @@ def get_realtime_data(stock_codes, holdings=None):
                 
                 df = ak.stock_zh_a_hist(symbol=code, period="daily", 
                                        start_date=start_date, end_date=end_date, adjust="qfq")
+                
+                if not df.empty:
+                    latest = df.iloc[-1]
+                    name = code
+                    if holdings:
+                        for h in holdings:
+                            if h['code'] == code:
+                                name = h.get('name', code)
+                                break
+                    
+                    result[code] = {
+                        "name": name,
+                        "price": float(latest['收盘']),
+                        "avg_volume": 100000,
+                        "change_pct": 0,
+                    }
+            except Exception as e:
+                continue
+        
+        return result
+        
+    except Exception as e:
+        print(f"⚠️  获取实时数据失败: {e}")
+        return {}
                 
                 if not df.empty:
                     latest = df.iloc[-1]
@@ -372,7 +403,7 @@ def simulate_extreme_scenario(holdings, market_data, market_drop=0.20, liquidity
 
 def calculate_correlation(stock_codes, period=60):
     """
-    计算持仓股票间的相关性矩阵
+    计算持仓股票间的相关性矩阵（并行获取历史数据）
     
     Args:
         stock_codes: 股票代码列表
@@ -389,24 +420,37 @@ def calculate_correlation(stock_codes, period=60):
         import akshare as ak
         import pandas as pd
         import numpy as np
+        from concurrent.futures import ThreadPoolExecutor, as_completed
         
-        # 获取历史行情数据
+        # 并行获取历史行情数据
         price_data = {}
-        for code in stock_codes:
+        
+        def fetch_stock_data(code):
+            """获取单只股票历史数据"""
             try:
-                # 获取日线数据
                 if code.startswith('6'):
-                    # 上海股票
                     df = ak.stock_zh_a_hist(symbol=code, period="daily", start_date="20250101", adjust="qfq")
                 else:
-                    # 深圳股票
                     df = ak.stock_zh_a_hist(symbol=code, period="daily", start_date="20250101", adjust="qfq")
                 
                 if not df.empty and '收盘' in df.columns:
-                    price_data[code] = df.set_index('日期')['收盘'].iloc[-period:]
+                    return code, df.set_index('日期')['收盘'].iloc[-period:]
             except Exception as e:
                 print(f"  获取 {code} 历史数据失败: {e}")
-                continue
+            return code, None
+        
+        # 使用线程池并行获取（最多10个线程）
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            future_to_code = {executor.submit(fetch_stock_data, code): code for code in stock_codes}
+            
+            for future in as_completed(future_to_code):
+                code = future_to_code[future]
+                try:
+                    code_result, data = future.result()
+                    if data is not None:
+                        price_data[code_result] = data
+                except Exception as e:
+                    print(f"  处理 {code} 数据失败: {e}")
         
         if len(price_data) < 2:
             return None
