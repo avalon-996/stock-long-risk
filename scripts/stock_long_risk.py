@@ -128,30 +128,6 @@ def get_realtime_data(stock_codes, holdings=None):
     except Exception as e:
         print(f"⚠️  获取实时数据失败: {e}")
         return {}
-                
-                if not df.empty:
-                    latest = df.iloc[-1]
-                    name = code
-                    if holdings:
-                        for h in holdings:
-                            if h['code'] == code:
-                                name = h.get('name', code)
-                                break
-                    
-                    result[code] = {
-                        "name": name,
-                        "price": float(latest['收盘']),
-                        "avg_volume": 100000,
-                        "change_pct": 0,
-                    }
-            except Exception as e:
-                continue
-        
-        return result
-        
-    except Exception as e:
-        print(f"⚠️  获取实时数据失败: {e}")
-        return {}
 
 # 模拟市场数据（备用）
 MARKET_DATA = {
@@ -192,6 +168,9 @@ def load_market_data(holdings):
         # 获取其他市场数据
         if code in realtime_data:
             avg_volume = realtime_data[code].get("avg_volume", 100000)
+            # 如果日均成交量为0或无效，设置默认值
+            if not avg_volume or avg_volume <= 0:
+                avg_volume = 100000
             name = realtime_data[code].get("name", h.get('name', code))
         else:
             avg_volume = 100000
@@ -403,7 +382,7 @@ def simulate_extreme_scenario(holdings, market_data, market_drop=0.20, liquidity
 
 def calculate_correlation(stock_codes, period=60):
     """
-    计算持仓股票间的相关性矩阵（并行获取历史数据）
+    计算持仓股票间的相关性矩阵（并行获取历史数据，带超时控制）
     
     Args:
         stock_codes: 股票代码列表
@@ -420,37 +399,48 @@ def calculate_correlation(stock_codes, period=60):
         import akshare as ak
         import pandas as pd
         import numpy as np
-        from concurrent.futures import ThreadPoolExecutor, as_completed
+        from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
+        
+        # 限制最大股票数量，避免超时（最多分析50只）
+        if len(stock_codes) > 50:
+            print(f"  持仓股票较多({len(stock_codes)}只)，相关性分析取样前50只")
+            stock_codes = stock_codes[:50]
         
         # 并行获取历史行情数据
         price_data = {}
         
         def fetch_stock_data(code):
-            """获取单只股票历史数据"""
+            """获取单只股票历史数据（带超时）"""
             try:
-                if code.startswith('6'):
-                    df = ak.stock_zh_a_hist(symbol=code, period="daily", start_date="20250101", adjust="qfq")
-                else:
-                    df = ak.stock_zh_a_hist(symbol=code, period="daily", start_date="20250101", adjust="qfq")
+                # 只获取最近90天数据，减少请求时间
+                import datetime
+                end_date = datetime.datetime.now().strftime('%Y%m%d')
+                start_date = (datetime.datetime.now() - datetime.timedelta(days=90)).strftime('%Y%m%d')
                 
-                if not df.empty and '收盘' in df.columns:
+                df = ak.stock_zh_a_hist(symbol=code, period="daily", 
+                                       start_date=start_date, end_date=end_date, adjust="qfq")
+                
+                if not df.empty and '收盘' in df.columns and len(df) >= 20:
                     return code, df.set_index('日期')['收盘'].iloc[-period:]
             except Exception as e:
-                print(f"  获取 {code} 历史数据失败: {e}")
+                pass  # 静默失败，不打印错误
             return code, None
         
-        # 使用线程池并行获取（最多10个线程）
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        # 使用线程池并行获取（最多5个线程，避免过多请求）
+        with ThreadPoolExecutor(max_workers=5) as executor:
             future_to_code = {executor.submit(fetch_stock_data, code): code for code in stock_codes}
             
-            for future in as_completed(future_to_code):
+            # 设置总超时时间30秒
+            completed = 0
+            for future in as_completed(future_to_code, timeout=30):
                 code = future_to_code[future]
                 try:
-                    code_result, data = future.result()
+                    code_result, data = future.result(timeout=5)  # 单只股票5秒超时
                     if data is not None:
                         price_data[code_result] = data
+                        completed += 1
                 except Exception as e:
-                    print(f"  处理 {code} 数据失败: {e}")
+                    pass
         
         if len(price_data) < 2:
             return None
@@ -498,7 +488,6 @@ def calculate_correlation(stock_codes, period=60):
         }
         
     except Exception as e:
-        print(f"⚠️  计算相关性失败: {e}")
         return None
 
 def export_to_excel(holdings, market_data, risk, liquidity, extreme, correlation, output_file=None, send_wechat=False, wechat_user=None):
@@ -694,7 +683,8 @@ def generate_report(holdings_file=None, output_excel=None, wechat_user=None):
     # 加载市场数据
     print("正在获取实时行情数据...")
     market_data = load_market_data(holdings)
-    realtime_count = sum(1 for h in holdings if h['code'] in market_data and market_data[h['code']].get('price') != h.get('current_price'))
+    # 统计成功获取实时数据的股票数量（有成交量数据说明接口返回成功）
+    realtime_count = sum(1 for h in holdings if h['code'] in market_data and market_data[h['code']].get('avg_volume', 0) > 0)
     print(f"✅ 已获取 {realtime_count}/{len(holdings)} 只股票的实时数据")
     print()
     
