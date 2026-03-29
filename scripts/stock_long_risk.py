@@ -401,21 +401,16 @@ def calculate_correlation(stock_codes, period=60):
         import numpy as np
         from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError
         
-        # 限制最大股票数量，避免超时（最多分析50只）
-        if len(stock_codes) > 50:
-            print(f"  持仓股票较多({len(stock_codes)}只)，相关性分析取样前50只")
-            stock_codes = stock_codes[:50]
-        
         # 并行获取历史行情数据
         price_data = {}
         
         def fetch_stock_data(code):
             """获取单只股票历史数据（带超时）"""
             try:
-                # 只获取最近90天数据，减少请求时间
+                # 只获取最近60天数据，减少请求时间
                 import datetime
                 end_date = datetime.datetime.now().strftime('%Y%m%d')
-                start_date = (datetime.datetime.now() - datetime.timedelta(days=90)).strftime('%Y%m%d')
+                start_date = (datetime.datetime.now() - datetime.timedelta(days=70)).strftime('%Y%m%d')
                 
                 df = ak.stock_zh_a_hist(symbol=code, period="daily", 
                                        start_date=start_date, end_date=end_date, adjust="qfq")
@@ -426,16 +421,16 @@ def calculate_correlation(stock_codes, period=60):
                 pass  # 静默失败，不打印错误
             return code, None
         
-        # 使用线程池并行获取（最多5个线程，避免过多请求）
-        with ThreadPoolExecutor(max_workers=5) as executor:
+        # 使用线程池并行获取（10个线程）
+        with ThreadPoolExecutor(max_workers=10) as executor:
             future_to_code = {executor.submit(fetch_stock_data, code): code for code in stock_codes}
             
-            # 设置总超时时间30秒
+            # 设置总超时时间60秒
             completed = 0
-            for future in as_completed(future_to_code, timeout=30):
+            for future in as_completed(future_to_code, timeout=60):
                 code = future_to_code[future]
                 try:
-                    code_result, data = future.result(timeout=5)  # 单只股票5秒超时
+                    code_result, data = future.result(timeout=10)  # 单只股票10秒超时
                     if data is not None:
                         price_data[code_result] = data
                         completed += 1

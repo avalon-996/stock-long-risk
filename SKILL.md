@@ -1,6 +1,6 @@
 ---
 name: stock-long-risk
-version: 0.4.1
+version: 0.4.2
 description: 股票多头持仓风险测评工具 - 接入实时行情，分析持仓风险、计算极端情景下减仓时间和预期亏损
 author: Avalon
 homepage: https://github.com/avalon-996/stock-long-risk
