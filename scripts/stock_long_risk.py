@@ -9,16 +9,35 @@
 """
 import json
 import sys
+import os
 from datetime import datetime, timedelta
+
+# 添加脚本所在目录到路径
+script_dir = os.path.dirname(os.path.abspath(__file__))
+if script_dir not in sys.path:
+    sys.path.insert(0, script_dir)
+
+# 导入增强分析模块
+try:
+    from enhanced_analysis import (
+        get_sector_distribution_batch,
+        get_money_flow_from_tencent,
+        calculate_risk_radar
+    )
+    ENHANCED_MODE = True
+    print("✅ 增强模块已加载")
+except ImportError as e:
+    ENHANCED_MODE = False
+    print(f"⚠️  增强模块未加载: {e}")
 
 # 设计者信息
 AUTHOR_INFO = """
-╔══════════════════════════════════════════════════════════╗
-║  📊 Avalon 手搓 Skill - 股票多头持仓风险测评工具          ║
-║                                                          ║
-║  感谢支持！如果有任何意见和建议请联系我：                 ║
-║  📧 邮箱: 495019787@qq.com                               ║
-╚══════════════════════════════════════════════════════════╝
+┌─────────────────────────────────────────────────────────┐
+│  📊 stock-long-risk · 股票持仓风险测评                   │
+│                                                         │
+│  由 Avalon 独立开发，欢迎反馈与交流                      │
+│  📧 495019787@qq.com                                    │
+└─────────────────────────────────────────────────────────┘
 """
 
 # 首次运行标志文件
@@ -763,6 +782,45 @@ def export_to_excel(holdings, market_data, risk, liquidity, extreme, correlation
                         })
                     df_high_corr = pd.DataFrame(high_corr_data)
                     df_high_corr.to_excel(writer, sheet_name='高相关性股票对', index=False)
+            
+            # Sheet 7-9: 增强分析（如果可用）
+            if ENHANCED_MODE:
+                stock_codes = [h['code'] for h in holdings]
+                
+                # 行业板块分布
+                try:
+                    sector_result = get_sector_distribution_batch(stock_codes)
+                    if not sector_result['sector_dist'].empty:
+                        sector_result['sector_dist'].to_excel(
+                            writer, sheet_name='行业板块分布', index=False
+                        )
+                except Exception as e:
+                    print(f"⚠️  行业分布导出失败: {e}")
+                
+                # 资金流向追踪
+                try:
+                    money_flow = get_money_flow_from_tencent(stock_codes)
+                    if not money_flow.empty:
+                        money_flow.to_excel(
+                            writer, sheet_name='资金流向追踪', index=False
+                        )
+                except Exception as e:
+                    print(f"⚠️  资金流向导出失败: {e}")
+                
+                # 综合风险雷达
+                try:
+                    # 为持仓添加市值和减仓天数
+                    for h in holdings:
+                        code = h['code']
+                        price = market_data.get(code, {}).get('price', h['cost_price'])
+                        h['market_value'] = h['shares'] * price
+                    
+                    risk_radar = calculate_risk_radar(holdings, market_data, 
+                                                      sector_result['sector_dist'], 
+                                                      money_flow)
+                    risk_radar.to_excel(writer, sheet_name='综合风险雷达', index=False)
+                except Exception as e:
+                    print(f"⚠️  风险雷达导出失败: {e}")
         
         print(f"\n📊 Excel 报告已生成: {output_file}")
         

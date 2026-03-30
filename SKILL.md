@@ -1,7 +1,7 @@
 ---
 name: stock-long-risk
-version: 0.4.4
-description: 股票多头持仓风险测评工具 - 接入实时行情，分析持仓风险、计算极端情景下减仓时间和预期亏损
+version: 0.5.0
+description: 股票多头持仓风险测评工具 - 接入实时行情，分析持仓风险、计算极端情景下减仓时间和预期亏损，新增行业分布、资金流向、综合风险雷达
 author: Avalon
 homepage: https://github.com/avalon-996/stock-long-risk
 keywords:
@@ -12,12 +12,15 @@ keywords:
   - 极端情景
   - 减仓
   - 实时行情
-  - akshare
+  - 行业分布
+  - 资金流向
+  - 风险雷达
 requires:
   python: ">=3.8"
   packages:
     - akshare>=1.15.0
     - pandas>=1.3.0
+    - openpyxl>=3.0.0
     - openpyxl>=3.0.0
   binaries:
     - python3
@@ -153,6 +156,9 @@ message(action='send', to='o9cq805JNSBrHdVBZVY13ufbBRLQ@im.wechat',
 | 极端情景模拟 | 极端行情下的价格、卖出价、预计亏损 |
 | 相关性矩阵 | 股票间的相关系数矩阵 |
 | 高相关性股票对 | 相关系数 > 0.7 的股票组合 |
+| **行业板块分布** ⭐v0.5.0 | 持仓股票的行业/板块分布统计 |
+| **资金流向追踪** ⭐v0.5.0 | 基于涨跌幅的资金流向估算 |
+| **综合风险雷达** ⭐v0.5.0 | 六维度风险评分雷达图 |
 
 导出示例：
 ```bash
@@ -168,10 +174,12 @@ python3 scripts/stock_long_risk.py holdings.json /tmp/report.xlsx
 ## 后续优化方向
 
 - [x] 接入实时行情数据
+- [x] **v0.5.0** 新增行业分布、资金流向、风险雷达
 - [ ] 支持更多极端情景参数配置
 - [ ] 增加 VaR、CVaR 等风险指标
 - [ ] 支持组合层面的风险归因分析
 - [ ] 可视化风险报告（图表）
+- [ ] 接入真实主力资金流向数据（东方财富/同花顺）
 
 ## 许可证
 
